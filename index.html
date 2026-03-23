@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сайт о любви</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Sacramento&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid #fff;
+            border-radius: 10px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 60px rgba(0, 0, 0, 0.7);
+            animation: fadein 1s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        h1 {
+            color: #fffae2;
+            margin-bottom: 20px;
+            font-family: 'Sacramento', cursive;
+            font-size: 3em;
+        }
+
+        .question {
+            font-size: 1.5em;
+            margin: 20px 0;
+        }
+
+        .button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            background-color: #33cc95;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+            margin: 10px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .button:hover {
+            background-color: #28b67c;
+        }
+
+        .no-button {
+            position: relative;
+            display: inline-block;
+            transition: transform 0.3s;
+            background-color: #ff6f61 !important;
+            z-index: 10;
+        }
+
+        .no-button:hover {
+            background-color: #ff4a39 !important;
+        }
+
+        @keyframes fadein {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .result-container {
+            display: none;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .coupon {
+            color: #fffae2;
+            background: #ff6f61;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #fff;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .coupon:hover {
+            background: #ff4a39;
+        }
+
+        .heart {
+            color: #ff6f61;
+            font-size: 2em;
+            animation: beat 1s infinite;
+        }
+
+        @keyframes beat {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        /* Стили для бегающей гифки */
+        .running-gif {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+            z-index: 5;
+            pointer-events: none;
+        }
+
+        .gif-controls {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .control-button {
+            padding: 8px 15px;
+            background-color: #33cc95;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        .control-button:hover {
+            background-color: #28b67c;
+        }
+        
+        .instructions {
+            font-size: 0.9em;
+            margin-top: 10px;
+            color: #fffae2;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<img src="images/заднийфон.JPG" alt="">
+<body>
+    <div class="container">
+        <h1><span class="heart">❤️</span> Привет, любовь! <span class="heart">❤️</span></h1>
+        
+        <!-- Бегающая гифка -->>
+        <img id="runningGif" class="running-gif" src="images/IMG_4746.JPG" alt="Бегающая гифка">
+        
+        <div id="question-container" class="question"></div>
+        <button class="button" id="yes-button">Да</button>
+        <button class="button no-button" id="no-button">Нет</button>
+        
+        <div id="thanks-message" style="display: none; margin-top: 20px;">
+            <p>Спасибо за ответ!</p>
+        </div>
+        
+        <!-- Панель управления гифкой -->
+        <div class="gif-controls">
+            <h3>🎬 Управление гифкой с нашими Личиками красивыми</h3>
+            <div>
+                <button class="control-button" id="startGif">Запустить гифку</button>
+                <button class="control-button" id="stopGif">Остановить гифку</button>
+                <button class="control-button" id="changeSpeed">Изменить скорость</button>
+            </div>
+        </div>
+        
+        <div id="result-container" class="result-container">
+            <h2>Ура, я тебя люблю!</h2>
+            <p>Вот твои купоны на счастье:</p>
+            <div class="coupon" id="coupon1">Билет на секретный супер приз ❤️ !</div>
+            <div class="coupon" id="coupon2">Бесплатный купон на мою любовь и мой поцелуй ❤️!</div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            "Ты скучаешь по мне?",
+            "Ты любишь меня?",
+            "Ты хотела бы провести вечер со мной?",
+            "Ты готова путешествовать вместе?",
+            "Ты веришь в нашу любовь?",
+            "Ты готова поддерживать меня всегда?",
+            "Ты считаешь, что между нами есть искра?",
+            "Ты мечтаешь о нашем будущем вместе?"
+        ];
+
+        let currentQuestionIndex = 0;
+        const questionContainer = document.getElementById('question-container');
+        const yesButton = document.getElementById('yes-button');
+        const noButton = document.getElementById('no-button');
+        const thanksMessage = document.getElementById('thanks-message');
+        const resultContainer = document.getElementById('result-container');
+        
+        // Элементы для гифки
+        const runningGif = document.getElementById('runningGif');
+        const startGifBtn = document.getElementById('startGif');
+        const stopGifBtn = document.getElementById('stopGif');
+        const changeSpeedBtn = document.getElementById('changeSpeed');
+        
+        let gifInterval = null;
+        let gifSpeed = 100; // скорость движения в мс
+        let directionX = 1;
+        let directionY = 1;
+        let posX = 0;
+        let posY = 0;
+
+        function showQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                questionContainer.innerText = questions[currentQuestionIndex];
+                thanksMessage.style.display = 'none';
+            } else {
+                questionContainer.style.display = 'none';
+                yesButton.style.display = 'none';
+                noButton.style.display = 'none';
+                resultContainer.style.display = 'block';
+            }
+        }
+
+        function handleYes() {
+            console.log(`Вопрос: ${questions[currentQuestionIndex]} | Ответ: Да`);
+            thanksMessage.style.display = 'block';
+            currentQuestionIndex++;
+            setTimeout(showQuestion, 1000);
+        }
+
+        function handleNo() {
+            console.log(`Вопрос: ${questions[currentQuestionIndex]} | Ответ: Нет`);
+            thanksMessage.style.display = 'block';
+            setTimeout(() => {
+                thanksMessage.style.display = 'none';
+            }, 1000);
+        }
+
+        // Движение кнопки "Нет"
+        noButton.addEventListener('mouseover', () => {
+            const containerRect = document.querySelector('.container').getBoundingClientRect();
+            const buttonRect = noButton.getBoundingClientRect();
+            
+            const maxX = containerRect.width - buttonRect.width - 20;
+            const maxY = containerRect.height - buttonRect.height - 20;
+            
+            const x = Math.random() * maxX;
+            const y = Math.random() * maxY;
+            
+            noButton.style.position = 'absolute';
+            noButton.style.left = `${x}px`;
+            noButton.style.top = `${y}px`;
+        });
+
+        // Запуск движения гифки
+        function startGifMovement() {
+            if (gifInterval) {
+                clearInterval(gifInterval);
+            }
+            
+            const container = document.querySelector('.container');
+            const containerRect = container.getBoundingClientRect();
+            
+            // Начальная позиция
+            posX = Math.random() * (containerRect.width - 80);
+            posY = Math.random() * (containerRect.height - 80);
+            
+            gifInterval = setInterval(() => {
+                // Обновляем позицию
+                posX += 5 * directionX;
+                posY += 3 * directionY;
+                
+                // Проверяем границы контейнера
+                if (posX <= 0 || posX >= containerRect.width - 80) {
+                    directionX *= -1;
+                }
+                if (posY <= 0 || posY >= containerRect.height - 80) {
+                    directionY *= -1;
+                }
+                
+                // Устанавливаем новую позицию
+                runningGif.style.left = `${posX}px`;
+                runningGif.style.top = `${posY}px`;
+                
+                // Немного вращаем гифку для эффекта
+                const rotation = (Date.now() / 20) % 360;
+                runningGif.style.transform = `rotate(${rotation}deg)`;
+                
+            }, gifSpeed);
+        }
+
+        // Остановка движения гифки
+        function stopGifMovement() {
+            if (gifInterval) {
+                clearInterval(gifInterval);
+                gifInterval = null;
+            }
+        }
+
+        // Изменение скорости
+        function changeGifSpeed() {
+            const speeds = [50, 100, 200, 300];
+            const currentIndex = speeds.indexOf(gifSpeed);
+            const nextIndex = (currentIndex + 1) % speeds.length;
+            gifSpeed = speeds[nextIndex];
+            
+            if (gifInterval) {
+                stopGifMovement();
+                startGifMovement();
+            }
+            
+            alert(`Скорость изменена: ${gifSpeed}мс`);
+        }
+
+        // Назначаем обработчики кнопок
+        startGifBtn.addEventListener('click', startGifMovement);
+        stopGifBtn.addEventListener('click', stopGifMovement);
+        changeSpeedBtn.addEventListener('click', changeGifSpeed);
+
+        // Обработка клика на купоны
+        document.getElementById('coupon1').addEventListener('click', () => {
+            alert("Поздравляю! Это твой секретный билет на очень крутой Куник!");
+        });
+
+        document.getElementById('coupon2').addEventListener('click', () => {
+            alert("Поздравляю! Это твой бесплатный купон на мою любовь и мой поцелуй!");
+        });
+
+        yesButton.addEventListener('click', handleYes);
+        noButton.addEventListener('click', handleNo);
+
+        // Автоматически запускаем гифку при загрузке страницы
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                startGifMovement();
+            }, 1000);
+        });
+
+        // Показываем первый вопрос при загрузке страницы
+        showQuestion();
+    </script>
+</body>
+</html>
